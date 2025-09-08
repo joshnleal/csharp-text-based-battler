@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "nbTFrmncFG4=",
+  "success": true,
+  "projectFilePath": "/home/joshua/lms2/1b/OOP/csharp-text-based-battler/csharp-text-based-battler.csproj",
+  "expectedPackageFiles": [
+    "/home/joshua/.nuget/packages/microsoft.aspnetcore.app.ref/9.0.8/microsoft.aspnetcore.app.ref.9.0.8.nupkg.sha512"
+  ],
+  "logs": []
+}
