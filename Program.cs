@@ -67,8 +67,7 @@ foreach (int monsterHealth in monsters)
     int currentMonsterHealth = monsterHealth;
     if (playerHealth <= 0)
         break;
-    else
-        Console.WriteLine("A monster appears...");
+    Console.WriteLine("A monster appears...");
     while (!(currentMonsterHealth <= 0) && !(playerHealth <= 0))
     {
         Console.WriteLine("Current Health");
@@ -118,6 +117,7 @@ foreach (int monsterHealth in monsters)
         catch (ArgumentException ex)
         {
             Console.WriteLine(ex.Message);
+            continue;
         }
     }
 }
