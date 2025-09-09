@@ -55,3 +55,52 @@ for (int i = 0; i < monsterCount; i++)
 }
 
 int playerHealth = 50;
+
+Console.WriteLine("Battle Phase");
+Random random = new Random();
+int rng;
+foreach (int monsterHealth in monsters) {
+    int currentMonsterHealth = monsterHealth;
+    if (playerHealth <= 0)
+        break;
+    else
+        Console.WriteLine("A monster appears.");
+    while (currentMonsterHealth != 0 || playerHealth <= 0)
+        {
+            Console.WriteLine("Health");
+            Console.WriteLine($"{heroName}: {playerHealth}");
+            Console.WriteLine($"Monster: {monsterHealth}");
+            Console.WriteLine($"\n{heroName}'s turn");
+            Console.WriteLine("Select an action");
+            Console.WriteLine("1. Heal");
+            Console.WriteLine("2. Attack");
+            string? input = null;
+            int playerChoice;
+            try
+            {
+                input = Console.ReadLine();
+                if (!int.TryParse(input, out playerChoice))
+                {
+                    throw new ArgumentException("Error: Input an integer.");
+                }
+                if (playerChoice < 1 || playerChoice > 2)
+                {
+                    throw new ArgumentException("Error: Input must be 1 or 2.");
+                }
+                rng = random.Next(5, 16);
+                if (playerChoice == 1)
+                    playerHealth += rng;
+                else
+                    currentMonsterHealth -= rng;
+
+
+                if (currentMonsterHealth <= 0)
+                Console.WriteLine("Monster defeated!");
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+}
