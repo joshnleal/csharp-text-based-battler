@@ -1,7 +1,7 @@
-﻿Console.WriteLine("Welcome");
+﻿Console.WriteLine("Welcome to the Monster Battler");
 string? heroName = null;
 int monsterCount = 0;
-do
+do 
 {
     try
     {
@@ -25,7 +25,7 @@ do
 
 } while (heroName is null);
 
-do
+do 
 {
     Console.Write("How many monsters would you like to battle?: ");
     string? count = Console.ReadLine();
@@ -46,8 +46,9 @@ do
     }
 } while (monsterCount <= 1);
 
-Console.WriteLine($"Hello there {heroName}! You will be battling {monsterCount} monsters.");
+Console.WriteLine($"\nHello there {heroName}! You will be battling {monsterCount} monsters.");
 
+// Initializing monsters and their health
 int[] monsters = new int[monsterCount];
 for (int i = 0; i < monsterCount; i++)
 {
@@ -57,6 +58,7 @@ for (int i = 0; i < monsterCount; i++)
 int playerHealth = 50;
 
 Console.WriteLine("Battle Phase");
+Console.WriteLine("------------");
 Random random = new Random();
 int rng;
 foreach (int monsterHealth in monsters) {
@@ -64,43 +66,55 @@ foreach (int monsterHealth in monsters) {
     if (playerHealth <= 0)
         break;
     else
-        Console.WriteLine("A monster appears.");
-    while (currentMonsterHealth != 0 || playerHealth <= 0)
+        Console.WriteLine("A monster appears...");
+    while (!(currentMonsterHealth <= 0) && !(playerHealth <= 0))
         {
-            Console.WriteLine("Health");
+            Console.WriteLine("Current Health");
             Console.WriteLine($"{heroName}: {playerHealth}");
-            Console.WriteLine($"Monster: {monsterHealth}");
+            Console.WriteLine($"Monster: {currentMonsterHealth}");
             Console.WriteLine($"\n{heroName}'s turn");
             Console.WriteLine("Select an action");
             Console.WriteLine("1. Heal");
             Console.WriteLine("2. Attack");
             string? input = null;
             int playerChoice;
-            try
+        try
+        {
+            input = Console.ReadLine();
+    
+            if (!int.TryParse(input, out playerChoice))
+                throw new ArgumentException("Error: Input an integer.");
+            if (playerChoice < 1 || playerChoice > 2)
+                throw new ArgumentException("Error: Input must be 1 or 2.");
+    
+            rng = random.Next(5, 16);
+
+            if (playerChoice == 1)
             {
-                input = Console.ReadLine();
-                if (!int.TryParse(input, out playerChoice))
-                {
-                    throw new ArgumentException("Error: Input an integer.");
-                }
-                if (playerChoice < 1 || playerChoice > 2)
-                {
-                    throw new ArgumentException("Error: Input must be 1 or 2.");
-                }
-                rng = random.Next(5, 16);
-                if (playerChoice == 1)
-                    playerHealth += rng;
-                else
-                    currentMonsterHealth -= rng;
+                playerHealth += rng;
+                Console.WriteLine($"{heroName} heals for {rng} hit points.");
+            }
+            else
+            { 
+                currentMonsterHealth -= rng;
+                Console.WriteLine($"{heroName} attacks monsters for {rng} hit points.");
+            }
 
-
-                if (currentMonsterHealth <= 0)
+            if (currentMonsterHealth <= 0)
+            {
                 Console.WriteLine("Monster defeated!");
             }
-            catch (ArgumentException ex)
+            else
             {
-                Console.WriteLine(ex.Message);
+                rng = random.Next(5, 16);
+                playerHealth -= rng;
+                Console.WriteLine($"Monster attacks {heroName} for {rng} hit points.");    
             }
+            }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
 
         }
 }
