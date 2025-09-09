@@ -48,3 +48,10 @@ do
 
 Console.WriteLine($"Hello there {heroName}! You will be battling {monsterCount} monsters.");
 
+int[] monsters = new int[monsterCount];
+for (int i = 0; i < monsterCount; i++)
+{
+    monsters[i] = 10 * (i + 1);
+}
+
+int playerHealth = 50;
