@@ -9,7 +9,6 @@ public class Hero
     public string? Name { get; set; }
     public int Health { get; set; }
 
-
     public Hero(string name, int health)
     {
         Name = name;
