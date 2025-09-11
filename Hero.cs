@@ -1,4 +1,8 @@
 using System.Security.Cryptography;
+namespace Battler
+{
+    class Hero;
+}
 
 public class Hero
 {
@@ -6,15 +10,22 @@ public class Hero
     public int Health { get; set; }
 
 
-    public Hero(string Name, int Health)
+    public Hero(string name, int health)
     {
-        this.Name = Name;
-        this.Health = Health;
+        Name = name;
+        Health = health;
     }
 
     public void TakeDamage(int monsterAttack)
     {
         Health -= monsterAttack;
+        Console.WriteLine($"Monster attacks {Name} for {monsterAttack} hit points.");
+    }
+
+    public void Heal(int healthPoints)
+    {
+        Health += healthPoints;
+        Console.WriteLine($"{Name} heals for {healthPoints} hit points.");
     }
 
     public bool IsDead()
@@ -24,16 +35,10 @@ public class Hero
 
     public void PlayTurn(Monster monster)
     { 
-        Console.WriteLine("Battle Phase");
-        Console.WriteLine("------------");
         Random random = new Random();
         int rng;
-        Console.WriteLine("A monster appears...");
-        while (!(monster.Health <= 0) && !(this.Health <= 0))
+        while (!(Health <= 0))
         {
-            Console.WriteLine("Current Health");
-            Console.WriteLine($"{Name}: {this.Health}");
-            Console.WriteLine($"Monster: {monster.Health}");
             Console.WriteLine($"\n{Name}'s turn");
             Console.WriteLine("Select an action");
             Console.WriteLine("1. Heal");
@@ -53,26 +58,9 @@ public class Hero
                 rng = random.Next(5, 16);
 
                 if (playerChoice == 1)
-                {
-                    this.Health += rng;
-                    Console.WriteLine($"{Name} heals for {rng} hit points.");
-                }
+                    Heal(rng);
                 else
-                {
-                    monster.Health -= rng;
-                    Console.WriteLine($"{Name} attacks monsters for {rng} hit points.");
-                }
-
-                if (monster.Health <= 0)
-                {
-                    Console.WriteLine("Monster defeated!\n");
-                }
-                else
-                {
-                    rng = random.Next(5, 16);
-                    this.Health -= rng;
-                    Console.WriteLine($"Monster attacks {Name} for {rng} hit points.");
-                }
+                    monster.TakeDamage(rng);
             }
             catch (ArgumentException ex)
             {

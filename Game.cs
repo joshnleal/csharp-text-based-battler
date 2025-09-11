@@ -1,0 +1,4 @@
+namespace Battler
+{
+    class Game;
+}
