@@ -20,12 +20,12 @@ public class Game
         Console.WriteLine("------");
         for (int i = 0; i < Monsters; i++)
         {
-            RunMonsterBattle(new Monster(i * 10, i + 1));
+            Console.WriteLine("\nA monster appears...");
+            RunMonsterBattle(new Monster(10 * (i + 1), i + 1));
             if (Player.IsDead())
-            {
-                killCount = i + 1;
                 break;
-            }
+                
+            killCount++;
         }
         if (!Player.IsDead())
         {
@@ -41,9 +41,17 @@ public class Game
 
     public void RunMonsterBattle(Monster monster)
     {
-        Player.PlayTurn(monster);
-        if (monster.IsDead())
-            return;
-        monster.MonsterTurn(Player);
+        while (!Player.IsDead()) {
+            Console.WriteLine("Current Health");
+            Console.WriteLine($"{Player.Name}: {Player.Health} hp");
+            Console.WriteLine($"Monster {monster.MonsterId}: {monster.Health} hp");
+            Player.PlayTurn(monster);
+            if (monster.IsDead())
+            {
+                Console.WriteLine("Monster killed");
+                return;
+            }
+            monster.MonsterTurn(Player);
+        }
     }
 }

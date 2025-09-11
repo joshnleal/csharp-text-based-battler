@@ -36,16 +36,17 @@ public class Hero
     { 
         Random random = new Random();
         int rng;
-        while (!(Health <= 0))
+        bool validInput = false;
+        while (!(validInput))
         {
-            Console.WriteLine($"\n{Name}'s turn");
-            Console.WriteLine("Select an action");
-            Console.WriteLine("1. Heal");
-            Console.WriteLine("2. Attack");
-            string? input = null;
-            int playerChoice;
             try
             {
+                Console.WriteLine($"\n{Name}'s turn");
+                Console.WriteLine("Select an action");
+                Console.WriteLine("1. Heal");
+                Console.WriteLine("2. Attack");
+                string? input = null;
+                int playerChoice;
                 Console.Write("Input:");
                 input = Console.ReadLine();
 
@@ -54,6 +55,7 @@ public class Hero
                 if (playerChoice < 1 || playerChoice > 2)
                     throw new ArgumentException("Error: Input must be 1 or 2.");
 
+                validInput = true;
                 rng = random.Next(5, 16);
 
                 if (playerChoice == 1)
@@ -64,7 +66,6 @@ public class Hero
             catch (ArgumentException ex)
             {
                 Console.WriteLine(ex.Message);
-                continue;
             }
         }
     }
