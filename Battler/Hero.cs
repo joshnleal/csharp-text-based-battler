@@ -5,11 +5,13 @@ namespace Battler
     {
         private string _name;
         private int _health;
+        private List<Weapon> _weapons;
 
         public Hero(string name, int health)
         {
             _name = name;
             _health = health;
+            _weapons = new List<Weapon>();
         }
 
         public string Name
@@ -22,6 +24,11 @@ namespace Battler
         {
             get { return _health; }
             set { _health = value; }
+        }
+
+        public List<Weapon> Weapons
+        {
+            get { return _weapons; }
         }
 
         public void TakeDamage(int monsterAttack)
@@ -54,6 +61,8 @@ namespace Battler
                     Console.WriteLine("Select an action");
                     Console.WriteLine("1. Heal");
                     Console.WriteLine("2. Attack");
+                    Console.WriteLine("3. Find a Weapon");
+                    Console.WriteLine("4. Upgrade Existing Weapon");
                     string? input = null;
                     int playerChoice;
                     Console.Write("Input:");
@@ -61,16 +70,18 @@ namespace Battler
 
                     if (!int.TryParse(input, out playerChoice))
                         throw new ArgumentException("Error: Input an integer.");
-                    if (playerChoice < 1 || playerChoice > 2)
-                        throw new ArgumentException("Error: Input must be 1 or 2.");
+                    if (playerChoice < 1 || playerChoice > 4)
+                        throw new ArgumentException("Error: Input must be between 1-4.");
 
                     validInput = true;
                     rng = random.Next(5, 16);
 
                     if (playerChoice == 1)
                         Heal(rng);
-                    else
+                    else if (playerChoice == 2)
                         monster.TakeDamage(rng);
+                    else if (playerChoice == 3)
+                        Weapons.Add(new Weapon());
                 }
                 catch (ArgumentException ex)
                 {
