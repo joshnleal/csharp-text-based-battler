@@ -2,12 +2,22 @@ namespace Battler
 {
     public class Game
     {
-        public Hero Player { get; }
-        int Monsters { get; set; }
+        private Hero _player;
+        private int _monsters;
         public Game(Hero currentPlayer, int monsterCount)
         {
-            Player = currentPlayer;
-            Monsters = monsterCount;
+            _player = currentPlayer;
+            _monsters = monsterCount;
+        }
+
+        public Hero Player
+        {
+            get { return _player; }
+        }
+
+        public int Monsters
+        { 
+            get { return _monsters; }
         }
 
         public void Play()
