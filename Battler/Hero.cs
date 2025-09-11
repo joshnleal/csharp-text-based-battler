@@ -3,13 +3,25 @@ namespace Battler
 {
     public class Hero
     {
-        public string? Name { get; set; }
-        public int Health { get; set; }
+        private string _name;
+        private int _health;
 
         public Hero(string name, int health)
         {
-            Name = name;
-            Health = health;
+            _name = name;
+            _health = health;
+        }
+
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+
+        public int Health
+        {
+            get { return _health; }
+            set { _health = value; }
         }
 
         public void TakeDamage(int monsterAttack)
