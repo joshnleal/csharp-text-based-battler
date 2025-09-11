@@ -1,4 +1,6 @@
-﻿Console.WriteLine("Welcome to the Monster Battler");
+﻿using Battler;
+
+Console.WriteLine("Welcome to the Monster Battler");
 string? heroName = null;
 int monsterCount = 0;
 int INITIAL_HEALTH = 50;
