@@ -81,7 +81,14 @@ namespace Battler
                     if (playerChoice == 1)
                         Heal(rng);
                     else if (playerChoice == 2)
-                        monster.TakeDamage(rng);
+                    {
+                        if (Weapons.Count == 1)
+                            monster.TakeDamage(Weapons[0].GetDamage());
+                        else if (Weapons.Count > 1)
+                            monster.TakeDamage(Weapons[SelectWeapon()].GetDamage());
+                        else
+                            monster.TakeDamage(rng);
+                    }
                     else if (playerChoice == 3)
                         Weapons.Add(new Weapon());
                     else
@@ -89,7 +96,7 @@ namespace Battler
                         if (Weapons.Count == 1)
                             Weapons[0].Upgrade(random.Next(0, 2));
                         else
-                            ChooseWeaponAndUpgrade(random.Next(0,2));
+                            Weapons[SelectWeapon()].Upgrade(random.Next(0, 2));
                     }
                 }
                 catch (ArgumentException ex)
@@ -99,36 +106,40 @@ namespace Battler
             }
         }
 
-        private void ChooseWeaponAndUpgrade(int rng) {
+        private int SelectWeapon()
+        {
+            int playerChoice = 0;
             bool validInput = false;
-            while (!validInput) {
+            while (!validInput)
+            {
                 try
                 {
                     string? input = null;
-                    int playerChoice;
 
-                    Console.WriteLine("Select a weapon to upgrade:");
+                    Console.WriteLine("Select a weapon:");
                     for (int i = 0; i < Weapons.Count; i++)
                     {
                         Console.WriteLine($"{i + 1}. {Weapons[i]}");
                     }
                     Console.Write("Input: ");
-
+                    input = Console.ReadLine();
+                    // TODO: select weapons does an infinite loop
                     if (!int.TryParse(input, out playerChoice))
                         throw new ArgumentException("Error: Input an integer.");
                     else if (playerChoice < 1 || playerChoice > Weapons.Count)
                         throw new ArgumentException($"Error: Input must be between 1-{Weapons.Count}.");
 
                     validInput = true;
-                    Weapons[playerChoice].Upgrade(rng);
+
 
                 }
                 catch (ArgumentException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
-                
+
             }
+            return playerChoice - 1;
         }
     }
 }

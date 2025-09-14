@@ -37,11 +37,13 @@ namespace Battler {
 
             Random random = new();
             var noun = nouns[random.Next(0, nouns.Length)];
-            var adjective = adjectives[random.Next(0,  adjectives.Length)];
+            var adjective = adjectives[random.Next(0, adjectives.Length)];
             _name = adjective.Adjective + noun.Name;
             _strength = noun.Strength;
             _reliability = noun.Reliability;
             _weight = noun.Weight;
+
+            Console.WriteLine($"Weapon found: {this.ToString()}");
         }
 
         public string Name
@@ -85,7 +87,7 @@ namespace Battler {
 
         public int Upgrade(int rng)
         {
-            ToString();
+            Console.WriteLine($"Old Stats: {ToString()}");
             Random random = new Random();
             Weight += random.Next(1, 6);
             int upgradeAmount = random.Next(1, 16);
@@ -103,7 +105,7 @@ namespace Battler {
 
             sb.Append($"upgraded by {upgradeAmount} points!");
             Console.WriteLine(sb.ToString());
-            ToString();
+            Console.WriteLine($"New stats: {ToString()}");
             return upgradeAmount;
         }
     }
