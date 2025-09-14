@@ -49,7 +49,7 @@ namespace Battler
         }
 
         public void PlayTurn(Monster monster)
-        { 
+        {
             Random random = new Random();
             int rng;
             bool validInput = false;
@@ -70,8 +70,10 @@ namespace Battler
 
                     if (!int.TryParse(input, out playerChoice))
                         throw new ArgumentException("Error: Input an integer.");
-                    if (playerChoice < 1 || playerChoice > 4)
+                    else if (playerChoice < 1 || playerChoice > 4)
                         throw new ArgumentException("Error: Input must be between 1-4.");
+                    else if (playerChoice == 4 && Weapons.Count < 0)
+                        throw new ArgumentException("Error: Inventory empty.");
 
                     validInput = true;
                     rng = random.Next(5, 16);
@@ -82,11 +84,50 @@ namespace Battler
                         monster.TakeDamage(rng);
                     else if (playerChoice == 3)
                         Weapons.Add(new Weapon());
+                    else
+                    {
+                        if (Weapons.Count == 1)
+                            Weapons[0].Upgrade(random.Next(0, 2));
+                        else
+                            ChooseWeaponAndUpgrade(random.Next(0,2));
+                    }
                 }
                 catch (ArgumentException ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
+            }
+        }
+
+        private void ChooseWeaponAndUpgrade(int rng) {
+            bool validInput = false;
+            while (!validInput) {
+                try
+                {
+                    string? input = null;
+                    int playerChoice;
+
+                    Console.WriteLine("Select a weapon to upgrade:");
+                    for (int i = 0; i < Weapons.Count; i++)
+                    {
+                        Console.WriteLine($"{i + 1}. {Weapons[i]}");
+                    }
+                    Console.Write("Input: ");
+
+                    if (!int.TryParse(input, out playerChoice))
+                        throw new ArgumentException("Error: Input an integer.");
+                    else if (playerChoice < 1 || playerChoice > Weapons.Count)
+                        throw new ArgumentException($"Error: Input must be between 1-{Weapons.Count}.");
+
+                    validInput = true;
+                    Weapons[playerChoice].Upgrade(rng);
+
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                
             }
         }
     }

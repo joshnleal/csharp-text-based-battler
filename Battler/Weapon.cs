@@ -1,3 +1,4 @@
+using System.Text;
 using Microsoft.VisualBasic;
 
 namespace Battler {
@@ -8,7 +9,7 @@ namespace Battler {
         private int _reliability;
         private int _weight;
 
-        public Weapon(string name, int strength, int reliability, int weight)
+        public Weapon()
         {
             // [(noun, strength, reliability, weight,)...]
             var nouns = new[] {
@@ -74,7 +75,7 @@ namespace Battler {
             return Strength * rng;
         }
 
-        public string ToString()
+        override public string ToString()
         {
             if (Reliability == 0)
                 return $"{Name} (BROKEN)";
@@ -88,12 +89,22 @@ namespace Battler {
             Random random = new Random();
             Weight += random.Next(1, 6);
             int upgradeAmount = random.Next(1, 16);
+            StringBuilder sb = new StringBuilder();
             if (rng == 1)
+            {
                 Strength += upgradeAmount;
+                sb.Append("Strength ");
+            }
             else
+            { 
                 Reliability += upgradeAmount;
+                sb.Append("Reliability ");
+            }
+
+            sb.Append($"upgraded by {upgradeAmount} points!");
+            Console.WriteLine(sb.ToString());
             ToString();
-            return rng;
+            return upgradeAmount;
         }
     }
 }
