@@ -38,7 +38,7 @@ namespace Battler {
             Random random = new();
             var noun = nouns[random.Next(0, nouns.Length)];
             var adjective = adjectives[random.Next(0, adjectives.Length)];
-            _name = adjective.Adjective + noun.Name;
+            _name = adjective.Adjective + " " + noun.Name;
             _strength = noun.Strength;
             _reliability = noun.Reliability;
             _weight = noun.Weight;

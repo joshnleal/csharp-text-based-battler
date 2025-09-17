@@ -83,11 +83,11 @@ namespace Battler
                     else if (playerChoice == 2)
                     {
                         if (Weapons.Count == 1)
-                            monster.TakeDamage(Weapons[0].GetDamage());
+                            rng = Weapons[0].GetDamage();
                         else if (Weapons.Count > 1)
-                            monster.TakeDamage(Weapons[SelectWeapon()].GetDamage());
-                        else
-                            monster.TakeDamage(rng);
+                            rng = Weapons[SelectWeapon()].GetDamage();
+
+                        monster.TakeDamage(rng);
                     }
                     else if (playerChoice == 3)
                         Weapons.Add(new Weapon());
@@ -118,19 +118,17 @@ namespace Battler
 
                     Console.WriteLine("Select a weapon:");
                     for (int i = 0; i < Weapons.Count; i++)
-                    {
                         Console.WriteLine($"{i + 1}. {Weapons[i]}");
-                    }
+                        
                     Console.Write("Input: ");
                     input = Console.ReadLine();
-                    // TODO: select weapons does an infinite loop
+
                     if (!int.TryParse(input, out playerChoice))
                         throw new ArgumentException("Error: Input an integer.");
                     else if (playerChoice < 1 || playerChoice > Weapons.Count)
                         throw new ArgumentException($"Error: Input must be between 1-{Weapons.Count}.");
 
                     validInput = true;
-
 
                 }
                 catch (ArgumentException ex)
